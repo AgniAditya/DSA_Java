@@ -1,4 +1,4 @@
-package BacktrackingRec;
+package backtracking;
 public class Nqueens {
     public static void main(String[] args) {
         boolean[][] board = new boolean[9][9];

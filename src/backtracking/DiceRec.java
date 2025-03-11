@@ -1,4 +1,4 @@
-package BacktrackingRec;
+package backtracking;
 import java.util.ArrayList;
 public class DiceRec {
     public static void main(String[] args) {

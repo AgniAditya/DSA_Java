@@ -1,4 +1,4 @@
-package BacktrackingRec;
+package backtracking;
 import java.util.Arrays;
 
 public class BacktrackingMaze {

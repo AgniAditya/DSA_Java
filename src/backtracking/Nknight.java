@@ -1,4 +1,4 @@
-package BacktrackingRec;
+package backtracking;
 public class Nknight {
     public static void main(String[] args) {
         int size = 2;
