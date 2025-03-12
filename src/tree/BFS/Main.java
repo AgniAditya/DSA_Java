@@ -1,35 +1,47 @@
 // package BFS;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class Main {
     public static void main(String[] args) {
         Tree tree = new Tree();
         tree.insert(10);
+        tree.insert(40);
+        tree.insert(50);
         tree.insert(20);
         tree.insert(5);
         tree.insert(7);
         tree.insert(15);
         tree.display();
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(tree.root);
-        BFS(tree.root,queue);
+        System.out.println(BFS(tree.root));
     }
     
-    static void BFS(Node root,Queue<Node> queue){
+    static List<List<Integer>> BFS(Node root){
+        List<List<Integer>> res = new ArrayList<>();
         if(root == null){
-            return;
+            return res;
         }
-        Node node = queue.poll();
-        System.out.println(node.data);
-        if(node.left != null){
-            queue.add(node.left);
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int level = queue.size();
+            List<Integer> list = new ArrayList<>();
+            for(int i = 0; i < level; i++){
+                Node node = queue.poll();
+                list.add(node.data);
+                if(node.left != null){
+                    queue.add(node.left);
+                }
+                if(node.right != null){
+                    queue.add(node.right);
+                }
+            }
+            res.add(list);
         }
-        if(node.right != null){
-            queue.add(node.right);
-        }
-        BFS(queue.peek(),queue);
+        return res;
     }
     public static class Node {
         int data;
