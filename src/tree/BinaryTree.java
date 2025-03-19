@@ -10,7 +10,7 @@ public class BinaryTree{
         }
     }
 
-    private Node root;
+    public Node root;
 
     public BinaryTree(){
         root = null;
