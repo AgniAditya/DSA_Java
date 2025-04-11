@@ -33,7 +33,9 @@ public class BipartiteGraph {
         int[] color = new int[adj.size()];
         for(int i = 0; i < color.length; i++){
             if(color[i] == 0){
-                if(!bfs(adj,color,i)) return false;
+                color[i] = 1;
+                if(!dfs(adj, color, i)) return false;
+                // if(!bfs(adj,color,i)) return false;
             }
         }
         return true;
@@ -42,16 +44,25 @@ public class BipartiteGraph {
     private static boolean bfs(ArrayList<ArrayList<Integer>> adj,int[] color,int num){
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(num);
-        color[num] = 1;
         while (!queue.isEmpty()) {
             int node = queue.poll();
             for(Integer n : adj.get(node)){
                 if (color[node] == color[n]) return false;
                 else if (color[n] == 0){
-                    if(node == 1) color[n] = 2;
-                    else color[n] = 1;
+                    color[n] = (color[node] == 1) ? 2 : 1;
                     queue.offer(n);
                 }
+            }
+        }
+        return true;
+    }
+
+    private static boolean dfs(ArrayList<ArrayList<Integer>> adj,int[] color,int num){
+        for(Integer n : adj.get(num)){
+            if (color[num] == color[n]) return false;
+            else if (color[n] == 0){
+                color[n] = (color[num] == 1) ? 2 : 1;
+                if(!dfs(adj, color, n)) return false;
             }
         }
         return true;
