@@ -9,12 +9,9 @@
 // 🔴 Important:
 // Dijkstra doesn't care about cycles or direction — it only breaks when negative weights exist.
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.util.*;
 
-class Pair{
+class Pair implements Comparable<Pair>{
     int node;
     int weight;
     Pair(int node,int weight){
@@ -25,6 +22,26 @@ class Pair{
     @Override
     public String toString(){
         return "[" + node + ", " + weight + "]";
+    }
+
+    @Override
+    public int compareTo(Pair other) {
+        if (this.weight == other.weight)
+            return Integer.compare(this.node, other.node);
+        return Integer.compare(this.weight, other.weight);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pair)) return false;
+        Pair pair = (Pair) o;
+        return node == pair.node;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(node);
     }
 }
 
@@ -52,11 +69,25 @@ public class DijkstraAlgo {
         System.out.print("Source Node: ");
         int src = sc.nextInt();
         sc.close();
+        System.out.print("Given Graph -> ");
         System.out.println(adj);
-        System.out.println(Arrays.toString(ShortestPath(adj,src)));
+        
+        System.out.println("Using Min Heap");
+        int[] dist_minheap = ShortestPath_MinHeap(adj,src);
+        System.out.println("Shortest distances from node " + src + ":");
+        for (int k = 0; k < dist_minheap.length; k++) {
+            System.out.println("Node " + k + ": " + dist_minheap[k]);
+        }
+
+        System.out.println("Using Set");
+        int[] dist_set = ShortestPath_Set(adj,src);
+        System.out.println("Shortest distances from node " + src + ":");
+        for (int k = 0; k < dist_set.length; k++) {
+            System.out.println("Node " + k + ": " + dist_set[k]);
+        }
     }
 
-    private static int[] ShortestPath(ArrayList<ArrayList<Pair>> adj,int src){
+    private static int[] ShortestPath_MinHeap(ArrayList<ArrayList<Pair>> adj,int src){
         int[] dist = new int[adj.size()];
 
         for(int i = 0; i < dist.length; i++) dist[i] = Integer.MAX_VALUE - 1;
@@ -74,6 +105,36 @@ public class DijkstraAlgo {
                 if(dist[node] + wt < dist[v]){
                     dist[v] = dist[node] + wt;
                     pq.offer(new Pair(v, dist[v]));
+                }
+            }
+        }
+        
+        for(int i = 0; i < dist.length; i++){
+            if(dist[i] == Integer.MAX_VALUE - 1) dist[i] = -1;
+        }
+
+        return dist;
+    }
+
+    private static int[] ShortestPath_Set(ArrayList<ArrayList<Pair>> adj,int src){
+        int[] dist = new int[adj.size()];
+
+        for(int i = 0; i < dist.length; i++) dist[i] = Integer.MAX_VALUE - 1;
+
+        TreeSet<Pair> set = new TreeSet<>();
+        set.add(new Pair(src, 0));
+
+        dist[src] = 0;
+        while (!set.isEmpty()) {
+            Pair p = set.pollFirst();
+            int node = p.node;
+            for(Pair n : adj.get(node)){
+                int v = n.node;
+                int wt = n.weight;
+                if(dist[node] + wt < dist[v]){
+                    set.remove(new Pair(v, dist[v]));
+                    dist[v] = dist[node] + wt;
+                    set.add(new Pair(v, dist[v]));
                 }
             }
         }
