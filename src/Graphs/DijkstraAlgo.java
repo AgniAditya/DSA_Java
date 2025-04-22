@@ -68,6 +68,8 @@ public class DijkstraAlgo {
         }
         System.out.print("Source Node: ");
         int src = sc.nextInt();
+        System.out.print("Destination Node: ");
+        int dest = sc.nextInt();
         sc.close();
         System.out.print("Given Graph -> ");
         System.out.println(adj);
@@ -85,6 +87,8 @@ public class DijkstraAlgo {
         for (int k = 0; k < dist_set.length; k++) {
             System.out.println("Node " + k + ": " + dist_set[k]);
         }
+
+        System.out.println("Shortest Path is -> " + (shortest_path(adj,src,dest)));
     }
 
     private static int[] ShortestPath_MinHeap(ArrayList<ArrayList<Pair>> adj,int src){
@@ -144,5 +148,47 @@ public class DijkstraAlgo {
         }
 
         return dist;
+    }
+
+    private static ArrayList<Integer> shortest_path(ArrayList<ArrayList<Pair>> adj,int src,int dest){
+        ArrayList<Integer> path = new ArrayList<>();
+
+        int[] dist = new int[adj.size()];
+        int[] parent = new int[adj.size()];
+
+        for(int i = 0; i < parent.length; i++) parent[i] = i;
+        for(int i = 0; i < dist.length; i++) dist[i] = Integer.MAX_VALUE - 1;
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> a.weight - b.weight);
+        pq.offer(new Pair(src, 0));
+
+        dist[src] = 0;
+        parent[src] = src;
+        while (!pq.isEmpty()) {
+            Pair p = pq.poll();
+            int node = p.node;
+            for(Pair n : adj.get(node)){
+                int v = n.node;
+                int wt = n.weight;
+                if(dist[node] + wt < dist[v]){
+                    dist[v] = dist[node] + wt;
+                    pq.offer(new Pair(v, dist[v]));
+                    parent[v] = node;
+                }
+            }
+        }
+        
+        for(int i = 0; i < dist.length; i++){
+            if(dist[i] == Integer.MAX_VALUE - 1) dist[i] = -1;
+        }
+
+        int j = dest;
+        while (j != parent[j]) {
+            path.add(0,j);
+            j = parent[j];
+        }
+        path.add(0,src);
+
+        return path;
     }
 }
