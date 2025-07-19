@@ -81,13 +81,6 @@ Feel free to open issues for suggestions, questions, or enhancements!
 
 ---
 
-## 📄 License
-
-Distributed under the MIT License.  
-See [`LICENSE`](LICENSE) for more information.
-
----
-
 ## 🙏 Acknowledgements
 
 - Inspired by classic DSA textbooks and open-source projects.
