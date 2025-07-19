@@ -56,7 +56,6 @@ DSA_Java/
 │   ├── sorting/
 │   └── searching/
 │
-├── test/                 # Sample test cases and input files
 ├── README.md
 └── ...
 ```
