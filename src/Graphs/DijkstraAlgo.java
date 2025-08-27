@@ -59,7 +59,7 @@ public class DijkstraAlgo {
             while (neighbours-- > 0) {
                 System.out.print("Enter the neighbour of: " + i + " -> ");
                 int node = sc.nextInt();
-                System.out.print("Enter the weight of the neighbour edge of -> ");
+                System.out.print("Enter the weight of the neighbour edge "+ node +" -> ");
                 int weight = sc.nextInt();
                 list.add(new Pair(node, weight));
             }

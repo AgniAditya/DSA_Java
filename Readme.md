@@ -56,7 +56,6 @@ DSA_Java/
 │   ├── sorting/
 │   └── searching/
 │
-├── test/                 # Sample test cases and input files
 ├── README.md
 └── ...
 ```
@@ -79,13 +78,6 @@ Follow these steps:
 5. **Open a Pull Request**
 
 Feel free to open issues for suggestions, questions, or enhancements!
-
----
-
-## 📄 License
-
-Distributed under the MIT License.  
-See [`LICENSE`](LICENSE) for more information.
 
 ---
 
