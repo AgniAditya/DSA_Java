@@ -30,6 +30,20 @@ public class PrimsAlgo {
         System.out.println(Prims_min_sum(adj));
     }
 
+    static class Pair {
+        int weight;
+        int node;
+        Pair(int node,int weight){
+            this.weight = weight;
+            this.node = node;
+        }
+
+        @Override
+        public String toString(){
+            return "( " + weight + ", " + node + " )";
+        }
+    }
+
     private static int Prims_min_sum(ArrayList<ArrayList<Pair>> adj){
         int n = adj.size();
 

@@ -1,6 +1,8 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Comparator;
+import java.util.List;
 
 
 public class KrushkalAlgo {
@@ -13,7 +15,7 @@ public class KrushkalAlgo {
         System.out.print("Enter the number of edges: ");
         int edges = sc.nextInt();
         
-        int[][] adj = new int[edges][edges];
+        int[][] adj = new int[edges][3];
 
         int i = 0;
         while (edges-- > 0) {
@@ -39,12 +41,42 @@ public class KrushkalAlgo {
         System.out.println(minSum(V,adj));
     }
 
-    private static int minSum(int V,int[][] edges){
+    static class Result {
+        int cost;
+        List<Pair> mstEdges;
+
+        public Result(int cost, List<Pair> mstEdges) {
+            this.cost = cost;
+            this.mstEdges = mstEdges;
+        }
+
+        @Override
+        public String toString(){
+            return "Cost: "+ cost + " " + "Edges: "+ mstEdges;
+        }
+    }
+
+    static class Pair {
+        int u;
+        int v;
+        Pair(int u,int v){
+            this.u = u;
+            this.v = v;
+        }
+
+        @Override
+        public String toString(){
+            return "( " + u + ", " + v + " )";
+        }
+    }
+
+    private static Result minSum(int V,int[][] edges){
         Arrays.sort(edges,Comparator.comparingInt(e -> e[2]));
 
         DisjointSet ds = new DisjointSet(V);
         int cost = 0;
         int count = 0;
+        List<Pair> MST = new ArrayList<>();
 
         for(int[] edge : edges){
             int u = edge[0];
@@ -54,11 +86,12 @@ public class KrushkalAlgo {
             if(ds.find(u) != ds.find(v)){
                 ds.union(u, v);
                 cost += wt;
+                MST.add(new Pair(u, v));
                 if(++count == V - 1) break;
             }
         }
 
-        return cost;
+        return new Result(cost, MST);
     }
 }
 

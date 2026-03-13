@@ -14,7 +14,7 @@ public class FloydWarshall {
         int[][] adj = new int[edges][edges];
 
         int i = 0;
-        while (num_nodes-- > 0) {
+        while (edges-- > 0) {
             System.out.print("Enter the source node: -> ");
             int src = sc.nextInt();
 

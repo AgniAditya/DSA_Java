@@ -66,4 +66,44 @@ public class StringMatching {
             }
         }
     }
+
+
+    private static ArrayList<Integer> Rabin_Krap(String text, String pat){
+        int m = text.length();
+        int n = pat.length();
+
+        ArrayList<Integer> res = new ArrayList<>();
+
+        int hash = hashing(pat);
+        int num = 0;
+
+        int j = 0;
+        int i = 0;
+        
+        while (j < n) {
+            num += ((int)text.charAt(j))*Math.pow(10,n-j-1);
+            j++;
+            if(j == n){
+                int k = i;
+                while (k < j && pat.charAt(k) == text.charAt(k)) {
+                    k++;
+                }
+            }
+        }
+
+        while (j < m) {
+            
+        }
+
+        return res;
+    }
+
+    private static int hashing(String pat){
+        int n = pat.length();
+        int num = 0;
+        for(int i = 0; i < n; i++){
+            num += ((int)pat.charAt(i))*Math.pow(10,n-i-1);
+        }
+        return num;
+    }
 }
